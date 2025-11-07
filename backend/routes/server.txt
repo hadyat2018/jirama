@@ -1,0 +1,59 @@
+const express = require('express');
+const cors = require('cors');
+const materielsRoutes = require('./routes/materielsRoutes');
+const employeRoutes = require('./routes/routeEmployer');
+const panneRoutes = require('./routes/panneRoute');
+const reclamationRoutes = require('./routes/reclamationRoute'); // ✅ ajout
+
+const app = express();
+const port = 5000;
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+// Route de test
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'API Gestion Matériel - Serveur en cours d\'exécution',
+    endpoints: {
+      'Matériels': {
+        'GET /api/materiels': 'Récupérer tous les matériels'
+      },
+      'Employés': {
+        'GET /api/employes': 'Récupérer tous les employés',
+        'GET /api/employes/:id': 'Récupérer un employé par ID',
+        'POST /api/employes': 'Créer un nouvel employé',
+        'PUT /api/employes/:id': 'Mettre à jour un employé',
+        'DELETE /api/employes/:id': 'Supprimer un employé',
+        'GET /api/employes/config/data': 'Récupérer les données de configuration'
+      },
+      'Pannes': {
+        'GET /api/pannes': 'Récupérer toutes les pannes',
+        'GET /api/pannes/:id': 'Récupérer une panne par ID',
+        'POST /api/pannes': 'Créer une nouvelle panne',
+        'PUT /api/pannes/:id': 'Mettre à jour une panne',
+        'DELETE /api/pannes/:id': 'Supprimer une panne',
+        'GET /api/techniciens': 'Récupérer tous les techniciens',
+        'GET /api/pannes/stats/dashboard': 'Récupérer les statistiques des pannes'
+      },
+      'Réclamations': {
+        'GET /api/reclamations': 'Récupérer toutes les réclamations',
+        'POST /api/reclamations': 'Créer une nouvelle réclamation',
+        'PUT /api/reclamations/:id': 'Mettre à jour une réclamation',
+        'DELETE /api/reclamations/:id': 'Supprimer une réclamation'
+      }
+    }
+  });
+});
+
+// Routes spécifiques
+app.use('/api/materiels', materielsRoutes);
+app.use('/api/employes', employeRoutes);
+app.use('/api', panneRoutes);
+app.use('/api/reclamations', reclamationRoutes); // ✅ ajout
+
+// Démarrage du serveur
+app.listen(port, () => {
+  console.log(`Serveur démarré sur http://localhost:${port}`);
+});

@@ -1,0 +1,55 @@
+CREATE DATABASE IF NOT EXISTS gestion_materiel;
+USE gestion_materiel;
+
+CREATE TABLE IF NOT EXISTS reclamations (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  numero VARCHAR(50) NOT NULL,
+  date_reclamation DATE NOT NULL,
+  materiel_concerne VARCHAR(255) NOT NULL,
+  employe_demandeur VARCHAR(255) NOT NULL,
+  type_reclamation VARCHAR(100) NOT NULL,
+  priorite ENUM('Basse', 'Moyenne', 'Haute', 'Critique') DEFAULT 'Moyenne',
+  statut ENUM('En attente', 'En cours', 'Terminé', 'Annulé') DEFAULT 'En attente',
+  technicien_assigne VARCHAR(255),
+  description_probleme TEXT NOT NULL,
+  date_creation DATETIME DEFAULT CURRENT_TIMESTAMP,
+  date_resolution DATETIME NULL
+);
+
+
+
+
+//pour les pannes
+CREATE DATABASE IF NOT EXISTS gestion_materiel;
+USE gestion_materiel;
+
+CREATE TABLE IF NOT EXISTS pannes (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  identifiant VARCHAR(50) NOT NULL UNIQUE,
+  materiel VARCHAR(100) NOT NULL,
+  taper VARCHAR(100) NOT NULL,
+  employe VARCHAR(100) NOT NULL,
+  departement VARCHAR(100) NOT NULL,
+  description TEXT NOT NULL,
+  panne_de_dattes DATE NOT NULL,
+  priorite ENUM('Basse','Moyenne','Haute','Critique') DEFAULT 'Moyenne',
+  statut ENUM('En attente','En cours','Résolu','Fermé') DEFAULT 'En attente',
+  technicien VARCHAR(100) DEFAULT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+
+CREATE TABLE interventions (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  date_intervention DATE NOT NULL,
+  materiel VARCHAR(255) NOT NULL,
+  type_intervention VARCHAR(100) NOT NULL,
+  technicien VARCHAR(100) NOT NULL,
+  duree VARCHAR(50) NOT NULL,
+  statut VARCHAR(50) DEFAULT 'Terminé',
+  cout DECIMAL(10,2) DEFAULT 0,
+  description TEXT,
+  pieces_utilisees TEXT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
