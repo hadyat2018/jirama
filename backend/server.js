@@ -7,7 +7,7 @@ const reclamationRoutes = require('./routes/reclamationRoute');
 const stocksRoutes = require('./routes/stocksRoutes');
 const historiqueRoutes = require('./routes/historiqueRoute');
 const tableBordRoutes = require('./routes/tableBordRoute'); // ✅ Ajout du tableau de bord
-const pool = require(' ./db');
+const pool = require('./db');
 
 const app = express();
 const port = 5000;
@@ -105,11 +105,8 @@ app.use('*', (req, res) => {
 
 // Démarrage du serveur
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
-
 app.listen(port, () => {
+  console.log(`Server running on port ${PORT}`);
   console.log(`🚀 Serveur démarré sur http://localhost:${port}`);
   console.log(`📊 Tableau de bord disponible sur http://localhost:${port}/api/tableau-bord/test`);
   console.log('🔗 Routes disponibles:');
