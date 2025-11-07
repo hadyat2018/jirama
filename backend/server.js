@@ -7,6 +7,7 @@ const reclamationRoutes = require('./routes/reclamationRoute');
 const stocksRoutes = require('./routes/stocksRoutes');
 const historiqueRoutes = require('./routes/historiqueRoute');
 const tableBordRoutes = require('./routes/tableBordRoute'); // ✅ Ajout du tableau de bord
+const pool = require(' ./db');
 
 const app = express();
 const port = 5000;
@@ -16,6 +17,15 @@ app.use(cors());
 app.use(express.json());
 
 // Route de test
+app.get('/api/test', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT NOW()'); // PostgreSQL
+    res.json({ time: result.rows[0] });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Erreur base de données');
+  }
+});
 app.get('/', (req, res) => {
   res.json({
     message: 'API Gestion Matériel - Serveur en cours d\'exécution',
@@ -94,6 +104,11 @@ app.use('*', (req, res) => {
 });
 
 // Démarrage du serveur
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
 app.listen(port, () => {
   console.log(`🚀 Serveur démarré sur http://localhost:${port}`);
   console.log(`📊 Tableau de bord disponible sur http://localhost:${port}/api/tableau-bord/test`);
