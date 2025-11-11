@@ -10,7 +10,7 @@ const tableBordRoutes = require('./routes/tableBordRoute'); // ✅ Ajout du tabl
 const pool = require('./db');
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors());
