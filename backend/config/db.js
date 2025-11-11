@@ -1,14 +1,16 @@
-// config/db.js
-const mysql = require("mysql2/promise");
+const { Pool } = require('pg');
 
-const pool = mysql.createPool({
-  host: "localhost",
-  user: "root",       // adapte à ton MySQL
-  password: "",       // ton mot de passe
-  database: "gestion_materiel",  // ta base
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false },
+});
+
+pool.connect((err) => {
+  if (err) {
+    console.error("❌ Erreur de connexion PostgreSQL :", err);
+  } else {
+    console.log("✅ Connexion PostgreSQL réussie");
+  }
 });
 
 module.exports = pool;
